@@ -1,0 +1,99 @@
+---
+title: "Attorney Involvement and Auto Bodily Injury Claim Losses"
+subtitle: "How much larger are bodily injury losses when the claimant hires an attorney?"
+author: "Hayden Hess and Peyton McCall"
+date: last-modified
+description: "A STAT 330 regression case study of attorney involvement and claim severity using the CASdatasets usautoBI data."
+---
+
+**Narrative word count:** Replace with a number from 750 to 1,000.
+
+::: {.callout-tip}
+This template suggests one way to tell the story. You may rename, combine, or reorder headings and add, remove, or move code chunks. Use plots, tables, selected model output, and prose in whatever combination best communicates your evidence. Keep every required part easy to find, use no more than four primary figures or tables, and delete this note and all bold prompts before submitting.
+:::
+
+## The question
+
+**Research question.** How is attorney involvement associated with a claimant's total economic loss on an automobile bodily injury claim, after accounting for the claimant's age, seatbelt use, sex, marital status, and whether the driver of the claimant's vehicle was insured?
+
+**Audience.** Claims managers and actuaries who estimate bodily injury claim severity.
+
+**Data source.** The usautoBI data from the CASdatasets R package (Dutang and Charpentier), collected in 2002 by the Insurance Research Council and published with Frees (2010).
+
+**Observational unit.** One injured claimant, the person on whom every variable is measured. Each claimant has one claim, and the data contain 1,340 claimants.
+
+## What the baseline shows
+
+**Describe and justify a simple course-based baseline regression model. Interpret the result that best establishes the rest of the story, including its direction, magnitude, scale, and uncertainty. Explain one limitation or unresolved pattern that motivates deeper analysis.**
+
+```{r}
+#| label: load-data
+library(tidyverse)
+
+data_file <- "usautoBI.rda"
+if (!file.exists(data_file)) {
+  download.file(
+    "https://github.com/dutangc/CASdatasets/raw/master/data/usautoBI.rda",
+    data_file, mode = "wb"
+  )
+}
+load(data_file)
+
+autobi <- as.data.frame(usautoBI) |>
+  select(-CASENUM) |>
+  mutate(
+    ATTORNEY = factor(ATTORNEY, levels = c(0, 1), labels = c("No", "Yes")),
+    CLMSEX   = factor(CLMSEX, levels = c("F", "M"), labels = c("Female", "Male")),
+    MARITAL  = factor(MARITAL, levels = 1:4,
+                      labels = c("Married", "Single", "Widowed", "Divorced")),
+    CLMINSUR = factor(CLMINSUR, levels = 1:2, labels = c("Uninsured", "Insured")),
+    SEATBELT = factor(SEATBELT, levels = 1:2, labels = c("Yes", "No"))
+  ) |>
+  drop_na() |>
+  mutate(log_loss = log(LOSS))
+```
+
+```{r}
+# Show a primary figure or table only if it helps answer the question.
+```
+
+## Going beyond the baseline
+
+**Use two STAT 330 method families. Give each part a descriptive heading that states the question or finding, not an assignment label. Explain why you chose each method, how you checked it, and what it adds to the answer.**
+
+### Replace with a question or finding
+
+**Present one method and its most useful evidence.**
+
+```{r}
+# Analysis code for this part.
+```
+
+### Replace with another question or finding
+
+**Present a method from a different family and its most useful evidence. Combine this with the preceding subsection if that creates a clearer story.**
+
+```{r}
+# Analysis code for this part.
+```
+
+## A new direction with AI
+
+**Explain the need revealed by your preliminary course-based work, the extension you implemented with AI support, and what it contributes to the same research question. Show its substantive result on this page and summarize your independent checks. If the extension is an untaught comparator, evaluate it against the core course-based model. Link to the AI-use record instead of placing a transcript here.**
+
+```{r}
+# Implement the verified extension or show its most useful result.
+```
+
+Details are in the [AI-use record](ai-use.qmd).
+
+## What this means
+
+**Answer the research question directly. Distinguish statistical evidence from practical importance, state the most consequential limitations, and suggest one sensible next step. Avoid causal claims unless the study design supports them.**
+
+## Data and code
+
+- **Data:** usautoBI from the CASdatasets R package (Dutang and Charpentier), <https://github.com/dutangc/CASdatasets>. The code downloads `usautoBI.rda` from GitHub on first render.
+- **Repository:** Replace with your repository URL.
+- [AI-use record](ai-use.qmd)
+- **Other sources:** Cite package documentation, articles, code, and other sources that materially informed the work.

@@ -1,0 +1,44 @@
+---
+title: "AI Use and Verification"
+description: "A concise record of AI-supported work on this project."
+author: "Hayden Hess and Peyton McCall"
+---
+
+This page is a work log, not a second report. Short bullets are welcome. It is separate from the final case study and does not count toward the 750 to 1,000 word range.
+
+## Starting point
+
+**AI system and date:** Claude Opus 5.5 (Anthropic), November 8, 2026.
+
+We asked how attorney involvement is associated with a claimant's total economic loss on an auto bodily injury claim, after accounting for age, seatbelt use, sex, marital status, and whether the driver of the claimant's vehicle was insured. Our core model is an ordinary least squares regression of log loss on those six predictors, fit to the 1,091 claimants with complete data. Holding the other predictors constant, claimants with an attorney have an estimated median loss 3.93 times that of claimants without one (95% CI 3.39 to 4.56). Injury severity is not recorded, the age relationship looks curved, and 249 of 1,340 claimants (19%) were dropped for missing values, mostly missing age.
+
+## Substantive prompts
+
+Paste the exact prompts that shaped the extension. Include the customized extension-selection prompt from the checkpoint and any important implementation follow-ups. Delete unused prompt blocks.
+
+> I'm doing a regression case study in R and Quarto on whether attorney involvement is linked to bigger losses on auto bodily injury claims. My response is log total economic loss (in thousands of dollars), and my predictors are attorney (yes or no), claimant age, seatbelt use, whether the claimant's driver was insured, sex, and marital status. My baseline is an OLS model on the 1,091 claimants with complete data, and it shows claimants with an attorney have about 3.93 times the median loss of those without one (95% CI 3.39 to 4.56), holding the others constant. The main problems I see are that injury severity isn't in the data, age looks curved, and 249 claimants (19%) got dropped for missing values. I'm already planning to add age squared with an attorney by age interaction and to use repeated 5 fold cross validation. Can you suggest three extensions that stay tied to the regression methods from my class, with one possibly being a model we didn't learn used as a comparator? For each one, tell me how it helps answer my question, how it would show up in my final report, how to do it, and two ways I could check it. Please don't pick for me.
+
+> Replace with another exact prompt, if needed.
+
+## My decisions
+
+- **Accepted:** We selected the second suggestion, a model not taught in class used as a comparator. We will fit a random forest to log loss with the same six predictors and compare it with our course models using the same repeated 5 fold cross validation folds and held out RMSE.
+- **Changed:** The suggestion allowed either a random forest or gradient boosting. We chose a random forest (the `ranger` package) because it needs less tuning and is easier to verify.
+- **Rejected or corrected:** We did not pursue multiple imputation or an interactive chart. Imputation would address missing data but not model form, and the chart would improve communication without testing the model.
+
+**Connection to the final case study:** The random forest's cross validated RMSE will appear beside our course models in the model comparison on the final page, along with a partial dependence summary for attorney involvement. If the forest predicts only slightly better, that supports our simpler, interpretable regression. If it predicts much better, that shows structure our regression misses.
+
+## Independent verification
+
+1. **Planned check, benchmark comparison:** Using identical folds and seed, we will compare the forest's held out RMSE with an intercept only model and our regression. We will also compare the forest's out of bag error, as defined in the `ranger` documentation, with its cross validated RMSE to confirm the two agree.
+2. **Planned check, manual calculation:** We will compute the attorney partial dependence by hand, predicting every claimant with attorney set to yes and then to no and averaging the difference. We will confirm it matches the `pdp` package output and compare its size with the regression's attorney coefficient of 1.37 on the log scale.
+
+Link or cite verification sources where appropriate. A second AI response does not count as independent verification.
+
+## Remaining limitation
+
+**State one important uncertainty, failure mode, or limitation that remains.**
+
+## Other AI use, if any
+
+For the proposal we used Claude (Anthropic) to help find a dataset, debug R code, and proofread wording. We also used it to help set up and publish this site.
