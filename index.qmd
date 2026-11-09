@@ -94,6 +94,6 @@ Details are in the [AI-use record](ai-use.qmd).
 ## Data and code
 
 - **Data:** usautoBI from the CASdatasets R package (Dutang and Charpentier), <https://github.com/dutangc/CASdatasets>. The code downloads `usautoBI.rda` from GitHub on first render.
-- **Repository:** Replace with your repository URL.
+- **Repository:** <https://github.com/Haydo1bball/AutoBI-claim-severity-project>
 - [AI-use record](ai-use.qmd)
 - **Other sources:** Cite package documentation, articles, code, and other sources that materially informed the work.

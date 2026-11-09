@@ -8,7 +8,7 @@ project:
     - .nojekyll
 
 website:
-  title: "STAT 330 Portfolio"
+  title: "Auto BI Claim Severity"
   search: false
   navbar:
     background: "#17324d"
@@ -21,7 +21,7 @@ website:
         href: ai-use.qmd
   back-to-top-navigation: true
   page-footer:
-    center: "STAT 330 portfolio project"
+    center: "Hayden Hess and Peyton McCall · STAT 330 course project, BYU"
     border: true
 
 format:
