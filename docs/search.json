@@ -95,6 +95,6 @@
     "href": "index.html#data-and-code",
     "title": "Attorney Involvement and Auto Bodily Injury Claim Losses",
     "section": "Data and code",
-    "text": "Data and code\n\nData: usautoBI from the CASdatasets R package (Dutang and Charpentier), https://github.com/dutangc/CASdatasets. The code downloads usautoBI.rda from GitHub on first render.\nRepository: https://github.com/Haydo1bball/AutoBI-claim-severity-project\nAI-use record\nOther sources: Cite package documentation, articles, code, and other sources that materially informed the work."
+    "text": "Data and code\n\nData: usautoBI from the CASdatasets R package (Dutang and Charpentier), https://github.com/dutangc/CASdatasets. The code downloads usautoBI.rda from GitHub on first render.\nRepository: https://github.com/haydenhess/AutoBI-claim-severity-project\nAI-use record\nOther sources: Cite package documentation, articles, code, and other sources that materially informed the work."
   }
 ]
